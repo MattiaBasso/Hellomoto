@@ -21,11 +21,12 @@ def send_meeting(scadenza, oggetto):
 
 
 df = pd.read_excel(r"C:\Users\mattia.basso\OneDrive - Basso s.r.l\Desktop\NUOVA DELHIZIA.xlsx", sheet_name="REGISTRO", parse_dates=["SCADENZA"], dtype={"FLAG_CALENDARIO": 'boolean'})
-df = df.drop(df[df.SCADENZA == np.NaN].index)
-date = df[df.SCADENZA > datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
-
+df["FLAG_CALENDARIO"] = df["FLAG_CALENDARIO"].fillna(value=False)
+date = df[df["SCADENZA"] > datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
 for row, data in date.iterrows():
-    if not data["FLAG_CALENDARIO"] or data["FLAG_CALENDARIO"] == np.:
-        print(data)
-        send_meeting(data.SCADENZA, data.LAVORO)
+    if not data["FLAG_CALENDARIO"] or data["FLAG_CALENDARIO"] == pd.NA:
+        print("Done")
+        # send_meeting(data.SCADENZA, data.LAVORO)
         data.FLAG_CALENDARIO = True
+df.update(date)
+print(date.FLAG_CALENDARIO.head())
